@@ -15,11 +15,13 @@
         </div>
 
 
-        <form class="max-w-sm mx-auto" method="POST" action="">
+        <form class="max-w-sm mx-auto" method="POST" action="{{route('lecture.save')}}">
+           {{csrf_field()}}
             <div class="mb-5">
                 <label for="lecture_name" class="block mb-2 text-sm font-medium">Name of Lecture</label>
                 <input
                     name="lecture_name"
+                    value="{{ old('lecture_name') }}"
                     type="text"
                     id="lecture_name"
                     class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-200 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -29,6 +31,7 @@
                 <label for="description" class="block mb-2 text-sm font-medium">Description</label>
                 <textarea
                     name="lecture_description"
+                    value="{{ old('lecture_description') }}"
                     id="description"
                     rows="4"
                     class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-200 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -37,6 +40,7 @@
                 <label for="video_link" class="block mb-2 text-sm font-medium">Video Link</label>
                 <input
                     name="lecture_link"
+                    value="{{ old('lecture_link') }}"
                     type="text"
                     id="video_link"
                     class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-200 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

@@ -21,7 +21,8 @@ Route::middleware(['auth',\App\Http\Middleware\AdminCheck::class])->prefix('admi
     Route::get('/add-new-lecture',[\App\Http\Controllers\LecturesController::class,'addNewLecture'])->name('lecture.add');
     Route::get('/all-lectures',[\App\Http\Controllers\LecturesController::class,'allLectures'])->name('lecture.all');
 
-
+Route::post('/save-new-product',[\App\Http\Controllers\LecturesController::class,'saveNewLecture'])->name('lecture.save');
 });
+
 
 require __DIR__.'/auth.php';

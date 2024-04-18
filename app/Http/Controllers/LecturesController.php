@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Lectures;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -20,7 +21,7 @@ class LecturesController extends Controller
         return view('admin.allLectures');
     }
 
-    public function saveNewLecture(Request $request)
+    public function saveNewLecture(Request $request):RedirectResponse
     {
         $request->validate([
             'lecture_name'=>'required|string|max:100',
@@ -35,8 +36,7 @@ class LecturesController extends Controller
             'user_id'=> Auth::id(),
         ]);
 
-
-
+        return redirect()->back();
     }
 
 }
