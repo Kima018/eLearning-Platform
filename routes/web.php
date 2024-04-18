@@ -19,6 +19,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth',\App\Http\Middleware\AdminCheck::class])->prefix('admin')->group(function (){
     Route::get('/add-new-lecture',[\App\Http\Controllers\LecturesController::class,'addNewLecture'])->name('lecture.add');
+    Route::get('/all-lectures',[\App\Http\Controllers\LecturesController::class,'allLectures'])->name('lecture.all');
 
 
 });
