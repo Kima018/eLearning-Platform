@@ -17,12 +17,20 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth',\App\Http\Middleware\AdminCheck::class])->prefix('admin')->group(function (){
-    Route::get('/add-new-lecture',[\App\Http\Controllers\LecturesController::class,'addNewLecture'])->name('lecture.add');
-    Route::get('/all-lectures',[\App\Http\Controllers\LecturesController::class,'allLectures'])->name('lecture.all');
+Route::middleware(['auth', \App\Http\Middleware\AdminCheck::class])->prefix('admin')->group(function () {
+    Route::get('/add-new-lecture', [\App\Http\Controllers\LecturesController::class, 'addNewLecture'])->name('lecture.add');
+    Route::get('/all-lectures', [\App\Http\Controllers\LecturesController::class, 'allLectures'])->name('lecture.all');
 
-Route::post('/save-new-product',[\App\Http\Controllers\LecturesController::class,'saveNewLecture'])->name('lecture.save');
+    Route::post('/save-new-product', [\App\Http\Controllers\LecturesController::class, 'saveNewLecture'])->name('lecture.save');
 });
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
+
+//Napravi ovako:
+//- Authentikacija
+//- ⁠Role admin, moderator i user
+//- ⁠Sistem za dodavanje predavanja
+//- ⁠	- Admin moze da dodaje predavanja, edituje i brise
+//- ⁠- Moderator moze da samo edituje predavanja
+//- ⁠- User moze da samo gleda predavanja

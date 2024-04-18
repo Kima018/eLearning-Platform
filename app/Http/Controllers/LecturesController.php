@@ -18,7 +18,8 @@ class LecturesController extends Controller
 
     public function allLectures():View
     {
-        return view('admin.allLectures');
+        $allLectures = Lectures::all();
+        return view('admin.allLectures',compact('allLectures'));
     }
 
     public function saveNewLecture(Request $request):RedirectResponse
@@ -31,8 +32,8 @@ class LecturesController extends Controller
 
         Lectures::create([
             'name'=>$request->get('lecture_name'),
-            'description'=>$request->get('lecture_name'),
-            'lecture_link'=>$request->get('lecture_name'),
+            'description'=>$request->get('lecture_description'),
+            'lecture_link'=>$request->get('lecture_link'),
             'user_id'=> Auth::id(),
         ]);
 
