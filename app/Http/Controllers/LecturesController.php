@@ -19,7 +19,7 @@ class LecturesController extends Controller
 
     public function allLectures(): View
     {
-        $allLectures = Lectures::all();
+        $allLectures = Lectures::paginate(20);
         return view('admin.allLectures', compact('allLectures'));
     }
 

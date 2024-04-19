@@ -9,7 +9,7 @@
                 <div
                     class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                     <div class="">
-                        <img class="rounded-t-lg" src="/storage/videoThumbnails/thumbnail1.jpg" alt="thumbnail"/>
+                        <img class="rounded-t-lg" src="/storage/videoThumbnails/{{$lecture->thumbnail_image}}" alt="thumbnail"/>
                     </div>
 
                     <div class="p-5">
@@ -30,7 +30,6 @@
                 </div>
             @endforeach
         </div>
-
 
     </section>
 @endsection
