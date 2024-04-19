@@ -15,13 +15,13 @@ class LecturesController extends Controller
 {
     public function addNewLecture(): View
     {
-        return view('admin.addLecture');
+        return view('admin.add-lecture');
     }
 
     public function allLectures(): View
     {
         $allLectures = Lectures::paginate(20);
-        return view('admin.allLectures', compact('allLectures'));
+        return view('admin.all-lectures', compact('allLectures'));
     }
 
     public function saveNewLecture(Request $request): RedirectResponse
@@ -49,6 +49,11 @@ class LecturesController extends Controller
         ]);
 
         return redirect()->back();
+    }
+
+    public function editLectures():View
+    {
+        return view('');
     }
 
 }

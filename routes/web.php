@@ -23,10 +23,10 @@ Route::middleware(['auth', AdminCheck::class])->prefix('admin')->group(function 
 
     Route::get('/add-new-lecture', [LecturesController::class, 'addNewLecture'])->name('lecture.add');
     Route::get('/all-lectures', [LecturesController::class, 'allLectures'])->name('lecture.all');
+    Route::get('/edit-lectures', [LecturesController::class, 'editLectures'])->name('lecture.edit');
 
     Route::post('/save-new-product', [LecturesController::class, 'saveNewLecture'])->name('lecture.save');
 });
-
 
 require __DIR__ . '/auth.php';
 
