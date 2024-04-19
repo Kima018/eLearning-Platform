@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Intervention\Image\ImageManager;
 
 class LecturesController extends Controller
 {
@@ -34,14 +35,16 @@ class LecturesController extends Controller
         ]);
 
         $file = $request->file('image');
-        $fileName = rand(0, 100) . time() . "." . $file->getClientOriginalExtension();
-        Storage::putFileAs('public/videoThumbnails/', $file, $fileName);
+        $fileName = rand(0, 100) . time();
+//        Storage::putFileAs('public/videoThumbnails/', $file, $fileName);
+        $path = Storage::disk('public')->path('videoThumbnails')."/$fileName.webp";
+        ImageManager::gd()->read($file)->save($path);
 
         Lectures::create([
             'name' => $request->get('lecture_name'),
             'description' => $request->get('lecture_description'),
             'lecture_link' => $request->get('lecture_link'),
-            'thumbnail_image'=>$fileName,
+            'thumbnail_image'=>$fileName.'.webp',
             'user_id' => Auth::id(),
         ]);
 
