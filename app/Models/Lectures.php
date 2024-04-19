@@ -13,5 +13,6 @@ class Lectures extends Model
         'description',
         'lecture_link',
         'user_id',
+        'thumbnail_image',
     ];
 }
