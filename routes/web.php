@@ -6,7 +6,7 @@ use App\Http\Middleware\AdminCheck;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('admin.admin-home');
 });
 
 Route::get('/dashboard', function () {
@@ -20,6 +20,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', AdminCheck::class])->prefix('admin')->group(function () {
+
     Route::get('/add-new-lecture', [LecturesController::class, 'addNewLecture'])->name('lecture.add');
     Route::get('/all-lectures', [LecturesController::class, 'allLectures'])->name('lecture.all');
 

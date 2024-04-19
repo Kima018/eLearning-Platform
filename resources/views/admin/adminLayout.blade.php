@@ -11,6 +11,7 @@
 </head>
 <body>
 @include('components.aside')
+@yield('adminHome')
 
 @yield('allLectures')
 @yield('addLecture')
