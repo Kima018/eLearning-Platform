@@ -53,7 +53,8 @@ class LecturesController extends Controller
 
     public function editLectures():View
     {
-        return view('');
+        $allLectures = Lectures::paginate(20);
+        return view('admin.edit-lectures',compact('allLectures'));
     }
 
 }
