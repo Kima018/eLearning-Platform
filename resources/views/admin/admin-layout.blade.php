@@ -18,6 +18,7 @@
 @yield('allLectures')
 @yield('addLecture')
 @yield('editLectures')
+@yield('editLecture')
 
 
 

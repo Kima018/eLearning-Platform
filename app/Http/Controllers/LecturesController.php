@@ -13,6 +13,12 @@ use Intervention\Image\ImageManager;
 
 class LecturesController extends Controller
 {
+//    protected function deleteCurrentImage($id)
+//    {
+//        $currImageName = Lectures::where(['id' => $id])->get('thumbnail_image');
+//        Storage::delete("/storage/videoThumbnails/" . $currImageName);
+//    }
+
     public function addNewLecture(): View
     {
         return view('admin.add-lecture');
@@ -57,10 +63,52 @@ class LecturesController extends Controller
         return view('admin.edit-lectures', compact('allLectures'));
     }
 
-    public function deleteLecture(Request $request)
+    public function deleteLecture(Request $request):RedirectResponse
     {
         Lectures::where(['id' => $request->get('lecture_id')])->delete();
         return redirect()->route('lecture.edit');
+    }
+
+    public function singleLecture(Lectures $lecture):View
+    {
+        return view('admin.single-lecture-edit', compact('lecture'));
+    }
+
+    public function updateLecture(Request $request):RedirectResponse
+    {
+        $request->validate([
+            'lecture_name' => 'required|string|max:100',
+            'lecture_description' => 'required|string',
+            'lecture_link' => 'required|string',
+            'image' => 'file|max:2048|mimes:jpg,jpeg,png,webp',
+        ]);
+
+        $lecture = Lectures::where(['id' => $request->get('lecture_id')])->first();
+
+        if ($request->hasFile('image')) {
+
+            $file = $request->file('image');
+            $fileName = rand(0, 100) . time();
+            $path = Storage::disk('public')->path('videoThumbnails') . "/$fileName.webp";
+            ImageManager::gd()->read($file)->save($path);
+
+            $oldImageName = Lectures::where(['id' => $request->get('lecture_id')])->value('thumbnail_image');
+            if (Storage::exists("/public/videoThumbnails/" . $oldImageName)) {
+                Storage::delete("/public/videoThumbnails/" . $oldImageName);
+            }
+            $lecture->update([
+                'thumbnail_image' => $fileName . '.webp',
+            ]);
+        }
+
+        $lecture->update([
+            'name' => $request->get('lecture_name'),
+            'description' => $request->get('lecture_description'),
+            'lecture_link' => $request->get('lecture_link'),
+        ]);
+
+        return redirect()->route('lecture.edit');
+
     }
 
 }
@@ -68,4 +116,6 @@ class LecturesController extends Controller
 
 /*
  * Zasto u falidaciju mi ne pusta => 'image|'
+ *
+ * Da pojasnimo malo path za public/ Storage
  */

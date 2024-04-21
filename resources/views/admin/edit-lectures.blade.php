@@ -15,12 +15,12 @@
                                  alt="thumbnail"/>
                         </div>
                         <div class="p-5">
-                            <a href="#">
+                            <div >
                                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{$lecture->name}}</h5>
-                            </a>
-                            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{$lecture->description}}</p>
+                            </div>
+                            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 text-wrap">{{$lecture->description}}</p>
                             <div class="flex flex-row gap-3 justify-between">
-                                <a href="#"
+                                <a href="{{route('lecture.single',['lecture'=>$lecture->id])}}"
                                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 ">
                                     <span>Edit Lecture</span>
                                     <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"

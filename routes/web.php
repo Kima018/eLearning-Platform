@@ -3,6 +3,7 @@
 use App\Http\Controllers\LecturesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\AdminCheck;
+use App\Http\Middleware\CheckIsAdminOrModerator;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -23,10 +24,16 @@ Route::middleware(['auth', AdminCheck::class])->prefix('admin')->group(function 
 
     Route::get('/add-new-lecture', [LecturesController::class, 'addNewLecture'])->name('lecture.add');
     Route::get('/all-lectures', [LecturesController::class, 'allLectures'])->name('lecture.all');
-    Route::get('/edit-lectures', [LecturesController::class, 'editLectures'])->name('lecture.edit');
+
 
     Route::post('/save-new-product', [LecturesController::class, 'saveNewLecture'])->name('lecture.save');
-    Route::post('/admin/lecture/delete',[LecturesController::class,'deleteLecture'])->name('lecture.delete');
+    Route::post('/lecture/delete', [LecturesController::class, 'deleteLecture'])->name('lecture.delete');
+});
+
+Route::middleware(['auth', CheckIsAdminOrModerator::class])->group(function () {
+    Route::get('/edit-lectures', [LecturesController::class, 'editLectures'])->name('lecture.edit');
+    Route::get('/lecture/{lecture}/edit', [LecturesController::class, 'singleLecture'])->name('lecture.single');
+    Route::post('/lecture/update', [LecturesController::class, 'updateLecture'])->name('lecture.update');
 });
 
 require __DIR__ . '/auth.php';
@@ -38,3 +45,11 @@ require __DIR__ . '/auth.php';
 //- 	- Admin moze da dodaje predavanja, edituje i brise
 //- - Moderator moze da samo edituje predavanja
 //- - User moze da samo gleda predavanja
+
+/*
+ * Ostalo
+ *      -Moderator Interface
+ *      -User Insterface
+ *      -Srediti Rute
+ *
+ */
