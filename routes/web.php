@@ -26,14 +26,15 @@ Route::middleware(['auth', AdminCheck::class])->prefix('admin')->group(function 
     Route::get('/edit-lectures', [LecturesController::class, 'editLectures'])->name('lecture.edit');
 
     Route::post('/save-new-product', [LecturesController::class, 'saveNewLecture'])->name('lecture.save');
+    Route::post('/admin/lecture/delete',[LecturesController::class,'deleteLecture'])->name('lecture.delete');
 });
 
 require __DIR__ . '/auth.php';
 
 //Napravi ovako:
 //- Authentikacija DONE
-//- Role admin, moderator i user
-//- Sistem za dodavanje predavanja (+dodavanje slika)
+//- Role admin, moderator i user DONE
+//- Sistem za dodavanje predavanja (+dodavanje slika) DONE
 //- 	- Admin moze da dodaje predavanja, edituje i brise
 //- - Moderator moze da samo edituje predavanja
 //- - User moze da samo gleda predavanja

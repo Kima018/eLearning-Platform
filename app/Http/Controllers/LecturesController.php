@@ -37,24 +37,30 @@ class LecturesController extends Controller
         $file = $request->file('image');
         $fileName = rand(0, 100) . time();
 //        Storage::putFileAs('public/videoThumbnails/', $file, $fileName);
-        $path = Storage::disk('public')->path('videoThumbnails')."/$fileName.webp";
+        $path = Storage::disk('public')->path('videoThumbnails') . "/$fileName.webp";
         ImageManager::gd()->read($file)->save($path);
 
         Lectures::create([
             'name' => $request->get('lecture_name'),
             'description' => $request->get('lecture_description'),
             'lecture_link' => $request->get('lecture_link'),
-            'thumbnail_image'=>$fileName.'.webp',
+            'thumbnail_image' => $fileName . '.webp',
             'user_id' => Auth::id(),
         ]);
 
         return redirect()->back();
     }
 
-    public function editLectures():View
+    public function editLectures(): View
     {
         $allLectures = Lectures::all();
-        return view('admin.edit-lectures',compact('allLectures'));
+        return view('admin.edit-lectures', compact('allLectures'));
+    }
+
+    public function deleteLecture(Request $request)
+    {
+        Lectures::where(['id' => $request->get('lecture_id')])->delete();
+        return redirect()->route('lecture.edit');
     }
 
 }
