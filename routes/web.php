@@ -1,14 +1,13 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LecturesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\AdminCheck;
 use App\Http\Middleware\CheckIsAdminOrModerator;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'homePage']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -20,8 +19,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/all-lectures', [LecturesController::class, 'allLectures'])->name('lecture.all')
-    ->middleware('auth');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/all-lectures', [LecturesController::class, 'allLectures'])->name('lecture.all');
+    Route::get('/lecture/{lecture}', [LecturesController::class, 'watchSingleLecture'])->name('lecture.watch');
+
+});
+
 
 Route::middleware(['auth', CheckIsAdminOrModerator::class])->group(function () {
     Route::get('/edit-lectures', [LecturesController::class, 'editLectures'])->name('lecture.edit');
@@ -36,7 +39,6 @@ Route::middleware(['auth', AdminCheck::class])->prefix('admin')->group(function 
     Route::post('/save-new-product', [LecturesController::class, 'saveNewLecture'])->name('lecture.save');
     Route::post('/lecture/delete', [LecturesController::class, 'deleteLecture'])->name('lecture.delete');
 });
-
 
 
 require __DIR__ . '/auth.php';
