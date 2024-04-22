@@ -1,4 +1,4 @@
-@extends('admin.admin-layout')
+@extends('layouts.admin-layout')
 
 @section('addLecture')
     <section class="px-5 sm:ml-64 sm:mt-10 text-gray-900">

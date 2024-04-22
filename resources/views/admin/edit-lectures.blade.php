@@ -1,5 +1,5 @@
 @php use Illuminate\Support\Facades\Auth; @endphp
-@extends('admin.admin-layout')
+@extends('layouts.admin-layout')
 
 @section('editLectures')
     <section class="px-5 sm:ml-64 sm:mt-10">
@@ -9,7 +9,7 @@
             @if($allLectures->count() > 0 )
                 @foreach($allLectures as $lecture)
                     <div
-                        class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                            class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                         <div class="w-full max-h-52 overflow-hidden">
                             <img class="rounded-t-lg w-full h-full object-cover object-center"
                                  src="/storage/videoThumbnails/{{$lecture->thumbnail_image}}"
@@ -42,8 +42,8 @@
                                     @if(Auth::user()->role === 'admin')
 
                                         <button
-                                            class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800  dark:bg-red-600 dark:hover:bg-red-700 "
-                                            type="submit"
+                                                class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800  dark:bg-red-600 dark:hover:bg-red-700 "
+                                                type="submit"
                                         >
                                             <span>Delete</span>
 

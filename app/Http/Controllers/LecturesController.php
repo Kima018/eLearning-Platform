@@ -27,7 +27,7 @@ class LecturesController extends Controller
     public function allLectures(): View
     {
         $allLectures = Lectures::paginate(20);
-        return view('admin.all-lectures', compact('allLectures'));
+        return view('all-lectures', compact('allLectures'));
     }
 
     public function saveNewLecture(Request $request): RedirectResponse
@@ -109,6 +109,11 @@ class LecturesController extends Controller
 
         return redirect()->route('lecture.edit');
 
+    }
+
+    public function watchSingleLecture(Lectures $lecture):View
+    {
+        return view('watch-single-lecture',compact('lecture'));
     }
 
 }
