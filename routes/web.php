@@ -7,7 +7,7 @@ use App\Http\Middleware\CheckIsAdminOrModerator;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('admin.admin-home');
+    return view('welcome');
 });
 
 Route::get('/dashboard', function () {
@@ -20,21 +20,24 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth', AdminCheck::class])->prefix('admin')->group(function () {
-
-    Route::get('/add-new-lecture', [LecturesController::class, 'addNewLecture'])->name('lecture.add');
-    Route::get('/all-lectures', [LecturesController::class, 'allLectures'])->name('lecture.all');
-
-
-    Route::post('/save-new-product', [LecturesController::class, 'saveNewLecture'])->name('lecture.save');
-    Route::post('/lecture/delete', [LecturesController::class, 'deleteLecture'])->name('lecture.delete');
-});
+Route::get('/all-lectures', [LecturesController::class, 'allLectures'])->name('lecture.all')
+    ->middleware('auth');
 
 Route::middleware(['auth', CheckIsAdminOrModerator::class])->group(function () {
     Route::get('/edit-lectures', [LecturesController::class, 'editLectures'])->name('lecture.edit');
     Route::get('/lecture/{lecture}/edit', [LecturesController::class, 'singleLecture'])->name('lecture.single');
     Route::post('/lecture/update', [LecturesController::class, 'updateLecture'])->name('lecture.update');
 });
+
+Route::middleware(['auth', AdminCheck::class])->prefix('admin')->group(function () {
+    Route::view('/', 'admin.admin-home');
+    Route::get('/add-new-lecture', [LecturesController::class, 'addNewLecture'])->name('lecture.add');
+
+    Route::post('/save-new-product', [LecturesController::class, 'saveNewLecture'])->name('lecture.save');
+    Route::post('/lecture/delete', [LecturesController::class, 'deleteLecture'])->name('lecture.delete');
+});
+
+
 
 require __DIR__ . '/auth.php';
 
@@ -51,5 +54,10 @@ require __DIR__ . '/auth.php';
  *      -Moderator Interface
  *      -User Insterface
  *      -Srediti Rute
+ *
+ * PITANJA
+ *      -Da li je bolje praviti AdminController i funkcije u njemu da stoje koje su za admina
+ *      ucitavalje bladeova, i logika vezana za to
+ *      -Praviti Odvojene bladeove za moderatora admina i usera(koliko je okeij da se koristi if statemate za prikaz elemenata
  *
  */
